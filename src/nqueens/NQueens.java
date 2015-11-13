@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class NQueens {
 
-    final static int N=11;
+    final static int N=10000;
     final static int MaxPrint=11;
     final static float C1=0.45F;
     final static float C2=500;
@@ -133,25 +133,15 @@ public class NQueens {
     int performSwap(int i, int j, int collisions)
     {
         int aux;
-        int collisions_ant_i_dp=0;
-        int collisions_ant_i_dn=0;
-        int collisions_ant_j_dp=0;
-        int collisions_ant_j_dn=0;
-        int collisions_cur_i_dp=0;
-        int collisions_cur_i_dn=0;
-        int collisions_cur_j_dp=0;
-        int collisions_cur_j_dn=0;
-        int DiffCollisions=0;
+
+        
 
         
         printDiagonals();
-        System.out.println("Before \ni: " + i + " dp:" + dp[CalculateDp(Queens[i], i)] + " dn: " + dn[CalculateDn(Queens[i], i)] +
-                           " j: " + j + " dp:" + dp[CalculateDp(Queens[j], j)] + " dn: " + dn[CalculateDn(Queens[j], j)]);
+        /*System.out.println("Before \ni: " + i + " dp:" + dp[CalculateDp(Queens[i], i)] + " dn: " + dn[CalculateDn(Queens[i], i)] +
+                           " j: " + j + " dp:" + dp[CalculateDp(Queens[j], j)] + " dn: " + dn[CalculateDn(Queens[j], j)]);*/
         
-        collisions_ant_i_dp+=CollisionsOnDiagonalDp(i);
-        collisions_ant_i_dn+=CollisionsOnDiagonalDn(i);
-        collisions_ant_j_dp+=CollisionsOnDiagonalDp(j);
-        collisions_ant_j_dn+=CollisionsOnDiagonalDn(j);
+  
         
         
         RemoveQueenFromDiagonals(i);
@@ -165,82 +155,37 @@ public class NQueens {
         AddQueenOnDiagonals(i);
         AddQueenOnDiagonals(j);
         
-        collisions_cur_i_dp+=CollisionsOnDiagonalDp(i);
-        collisions_cur_i_dn+=CollisionsOnDiagonalDn(i);
-        collisions_cur_j_dp+=CollisionsOnDiagonalDp(j);
-        collisions_cur_j_dn+=CollisionsOnDiagonalDn(j);
-        
-        if(collisions_ant_i_dp>collisions_cur_i_dp)
-        {    
-            DiffCollisions++;
-        }
-        else if(collisions_ant_i_dp<collisions_cur_i_dp)
-        {
-            DiffCollisions--;
-        }
-        
-        if(collisions_ant_i_dn>collisions_cur_i_dn)
-        {    
-            DiffCollisions++;
-        }
-        else if(collisions_ant_i_dn<collisions_cur_i_dn)
-        {
-            DiffCollisions--;
-        }
-        
-        if(collisions_ant_j_dp>collisions_cur_j_dp)
-        {    
-            DiffCollisions++;
-        }
-        else if(collisions_ant_j_dp<collisions_cur_j_dp)
-        {
-            DiffCollisions--;
-        }
-        
-        if(collisions_ant_j_dn>collisions_cur_j_dn)
-        {    
-            DiffCollisions++;
-        }
-        else if(collisions_ant_j_dn<collisions_cur_j_dn)
-        {
-            DiffCollisions--;
-        }
+       
         
 
-        System.out.println("Result: " + (collisions - DiffCollisions) + 
+        /*System.out.println("Result: " + (collisions - DiffCollisions) + 
                           " Compute collisions: " + computeCollisions());
         System.out.println("i: " + i + " dp:" + dp[CalculateDp(Queens[i], i)] + " dn: " + dn[CalculateDn(Queens[i], i)] +
                            " j: " + j + " dp:" + dp[CalculateDp(Queens[j], j)] + " dn: " + dn[CalculateDn(Queens[j], j)]);
         printDiagonals();
+        */
         
         
-        
-        //return computeCollisions();
-        return collisions - DiffCollisions;        
+        return computeCollisions();
+       // return collisions - DiffCollisions;        
     }
 //------------------------------------------------------------------------------------------------    
     boolean swapOk(int i, int j)
     {
         int auxi;
         int auxj;
-        int DiffCollisions=0;
+        
   
-        int collisions_ant_i_dp=0;
-        int collisions_ant_i_dn=0;
-        int collisions_ant_j_dp=0;
-        int collisions_ant_j_dn=0;
-        int collisions_cur_i_dp=0;
-        int collisions_cur_i_dn=0;
-        int collisions_cur_j_dp=0;
-        int collisions_cur_j_dn=0;
+        int collisions_ant=0;        
+        int collisions_cur=0;
+        
         
         
         //printDiagonals();
         //--First state--
-        collisions_ant_i_dp+=CollisionsOnDiagonalDp(i);
-        collisions_ant_i_dn+=CollisionsOnDiagonalDn(i);
-        collisions_ant_j_dp+=CollisionsOnDiagonalDp(j);
-        collisions_ant_j_dn+=CollisionsOnDiagonalDn(j);
+        collisions_ant+=CollisionsOnDiagonals(i);
+        collisions_ant+=CollisionsOnDiagonals(j);
+        
        
         RemoveQueenFromDiagonals(i);
         RemoveQueenFromDiagonals(j);
@@ -255,47 +200,10 @@ public class NQueens {
         AddQueenOnDiagonals(i);
         AddQueenOnDiagonals(j);
                 
-        collisions_cur_i_dp+=CollisionsOnDiagonalDp(i);
-        collisions_cur_i_dn+=CollisionsOnDiagonalDn(i);
-        collisions_cur_j_dp+=CollisionsOnDiagonalDp(j);
-        collisions_cur_j_dn+=CollisionsOnDiagonalDn(j);
+        collisions_cur+=CollisionsOnDiagonals(i);
+        collisions_cur+=CollisionsOnDiagonals(j);
+
         
-        if(collisions_ant_i_dp>collisions_cur_i_dp)
-        {    
-            DiffCollisions++;
-        }
-        else if(collisions_ant_i_dp<collisions_cur_i_dp)
-        {
-            DiffCollisions--;
-        }
-        
-        if(collisions_ant_i_dn>collisions_cur_i_dn)
-        {    
-            DiffCollisions++;
-        }
-        else if(collisions_ant_i_dn<collisions_cur_i_dn)
-        {
-            DiffCollisions--;
-        }
-        
-        if(collisions_ant_j_dp>collisions_cur_j_dp)
-        {    
-            DiffCollisions++;
-        }
-        else if(collisions_ant_j_dp<collisions_cur_j_dp)
-        {
-            DiffCollisions--;
-        }
-        
-        if(collisions_ant_j_dn>collisions_cur_j_dn)
-        {    
-            DiffCollisions++;
-        }
-        else if(collisions_ant_j_dn<collisions_cur_j_dn)
-        {
-            DiffCollisions--;
-        }
-       
         printQueens();
         printDiagonals();
         
@@ -309,8 +217,8 @@ public class NQueens {
         AddQueenOnDiagonals(i);
         AddQueenOnDiagonals(j);
         
-        
-        return DiffCollisions>0;
+         
+        return collisions_cur<=collisions_ant;
         
     }    
 //------------------------------------------------------------------------------------------------
@@ -376,10 +284,10 @@ public class NQueens {
         {
             printQueens();
             System.out.println("Generating new random sequence...");
-            //for(int x=0;x<N;x++)
-            //    Queens[x]=rand.nextInt(N);
             for(int x=0;x<N;x++)
-                Queens[x]=x;
+                Queens[x]=rand.nextInt(N);
+            //for(int x=0;x<N;x++)
+            //    Queens[x]=x;
             
             
             printQueens();
@@ -410,7 +318,7 @@ public class NQueens {
                     {
                                                 
                         collisions = performSwap(i, j, collisions);
-                        if(tmp%1==0)
+                        if(tmp%1==1000)
                             System.out.println("Swap collisions now: " + collisions);
                         tmp++;
                         if (collisions == 0) 

@@ -1,0 +1,4 @@
+# nqueens
+
+
+https://aprendizadodemaquina.com
